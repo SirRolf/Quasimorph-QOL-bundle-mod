@@ -8,7 +8,7 @@ namespace QOL_bundle
 		[Hook(ModHookType.AfterConfigsLoaded)]
 		public static void AfterConfigsLoaded(IModContext context)
 		{
-			Harmony harmony = new Harmony("Test_Mod");
+			Harmony harmony = new Harmony("QOL_bundle");
 			harmony.PatchAll();
 		}
 	}
