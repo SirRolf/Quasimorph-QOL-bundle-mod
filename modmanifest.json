@@ -1,0 +1,7 @@
+{
+  "UniqueModName": "SirRolf_QOL_bundle",
+  "Assemblies": [
+    "QOL_bundle.dll"
+  ],
+  "Dependencies": []
+}

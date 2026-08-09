@@ -1,10 +1,9 @@
-using HarmonyLib;
+﻿using HarmonyLib;
 using MGSC;
 
 namespace QOL_bundle
 {
-    [HarmonyPatch(typeof(RewardsGrid))]
-    [HarmonyPatch("AddIconToGrid")]
+    [HarmonyPatch(typeof(RewardsGrid),"AddIconToGrid")]
     public static class ClickItemForStock
     {
         static void Postfix(TooltipItemIcon test)
