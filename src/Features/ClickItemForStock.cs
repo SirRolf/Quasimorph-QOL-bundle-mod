@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using MGSC;
 
-namespace QOL_bundle
+namespace QOL_bundle.Features
 {
     [HarmonyPatch(typeof(RewardsGrid),"AddIconToGrid")]
     public static class ClickItemForStock
