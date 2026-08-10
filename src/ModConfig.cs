@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MGSC;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using UnityEngine;
 
 namespace QOL_bundle
 {
