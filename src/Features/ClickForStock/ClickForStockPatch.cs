@@ -8,7 +8,7 @@ namespace QOL_bundle.Features.ClickForStock
     {
         public static void Prefix(TooltipItemIcon icon, MainMenuScreen __instance)
         {
-            icon.MakeRed();//really just for testing to see if the mod gets loaded
+            icon.gameObject.AddComponent<ClickItemForStockBehaviour>();//probably use MGSC.CommonButton
         }
     }
 }
