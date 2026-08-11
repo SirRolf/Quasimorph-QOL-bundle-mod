@@ -3,12 +3,12 @@ using MGSC;
 
 namespace QOL_bundle.Features.ClickForStock
 {
-    [HarmonyPatch(typeof(RewardsGrid),nameof(RewardsGrid.AddIconToGrid))]
+    [HarmonyPatch(typeof(TooltipItemIcon),nameof(TooltipItemIcon.Initialize))]
     public static class ClickForStockPatch
     {
-        public static void Prefix(TooltipItemIcon icon, MainMenuScreen __instance)
+        public static void Prefix(string itemId, TooltipItemIcon __instance)
         {
-            icon.gameObject.AddComponent<ClickItemForStockBehaviour>();//probably use MGSC.CommonButton
+	        __instance.gameObject.AddComponent<ClickItemForStockBehaviour>().Configure(itemId);//probably use MGSC.CommonButton
         }
     }
 }
