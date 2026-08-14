@@ -32,6 +32,13 @@ namespace QOL_bundle.Features.InventoryHotkeys
 					_inventoryScreen.DragControllerInteractionCallback(InventoryInteractionType.DropOutside);
 					_inventoryScreen.DragControllerRefreshCallback();
 				}
+
+				if (InputHelper.GetKeyDown(KeyCode.D))
+				{
+					_inventoryScreen.DisassembleItem(_itemSlot.Item, (short) -1, true);
+					_inventoryScreen.TryUnloadWeapon(_itemSlot.Item);
+					_inventoryScreen._creatures.Player.CreatureData.EffectsController.PropagateAction(PlayerActionHappened.HandAction);
+				}
 			}
 
 		}
