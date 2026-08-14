@@ -21,17 +21,13 @@ namespace QOL_bundle.Features.InventoryHotkeys
 	[HarmonyPatch(typeof(ItemSlot),nameof(ItemSlot.Initialize))]
 	public class InventoryHotkeysPatchItemSlot
 	{
-		private static readonly Dictionary<ItemSlot, InventoryHotkeysBehaviour> _behaviourInstances = new Dictionary<ItemSlot, InventoryHotkeysBehaviour>();
-		
 		public static void Postfix(ItemSlot __instance)
 		{
-			if (_behaviourInstances.TryGetValue(__instance, out InventoryHotkeysBehaviour instance))
+			if (__instance.gameObject.TryGetComponent(out InventoryHotkeysBehaviour _))
 			{
-				instance._item = __instance.Item;
-				Plugin.Logger.Log("InventoryHotkeysPatch adjusted");
 				return;
 			}
-			_behaviourInstances.Add(__instance, __instance.gameObject.AddComponent<InventoryHotkeysBehaviour>().Configure(__instance.Item, InventoryHotkeysPatch.InventoryScreen));
+			__instance.gameObject.AddComponent<InventoryHotkeysBehaviour>().Configure(__instance, InventoryHotkeysPatch.InventoryScreen);
 			Plugin.Logger.Log("InventoryHotkeysPatch applied");
 		}
 	}
