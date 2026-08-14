@@ -25,7 +25,12 @@ namespace QOL_bundle.Features.InventoryHotkeys
 		
 		public static void Postfix(ItemSlot __instance)
 		{
-			if (_behaviourInstances.ContainsKey(__instance)) return;//gotta do some cleanup here
+			if (_behaviourInstances.TryGetValue(__instance, out InventoryHotkeysBehaviour instance))
+			{
+				instance._item = __instance.Item;
+				Plugin.Logger.Log("InventoryHotkeysPatch adjusted");
+				return;
+			}
 			_behaviourInstances.Add(__instance, __instance.gameObject.AddComponent<InventoryHotkeysBehaviour>().Configure(__instance.Item, InventoryHotkeysPatch.InventoryScreen));
 			Plugin.Logger.Log("InventoryHotkeysPatch applied");
 		}
