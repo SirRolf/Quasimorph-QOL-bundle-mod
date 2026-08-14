@@ -19,8 +19,21 @@ namespace QOL_bundle.Features.InventoryHotkeys
 		
 		private void Update()
 		{
-			if (_itemSlot.IsPointerInside && _itemSlot.Item != null && InputHelper.GetKeyDown(KeyCode.E))//probably should change to a keybind but not sure how to do that yet
-				_inventoryScreen.InteractWithCharacter(_itemSlot.Item, true);
+			if (_itemSlot.IsPointerInside && _itemSlot.Item != null) //probably should change to a keybind but not sure how to do that yet
+			{
+				if (InputHelper.GetKeyDown(KeyCode.E))
+				{
+					_inventoryScreen.InteractWithCharacter(_itemSlot.Item, true);
+				}
+
+				if (_itemSlot.Storage.Source != ItemStorageSource.Floor && InputHelper.GetKeyDown(KeyCode.F))
+				{
+					_inventoryScreen.DragControllerDropOutsideCallback(_itemSlot.Item);
+					_inventoryScreen.DragControllerInteractionCallback(InventoryInteractionType.DropOutside);
+					_inventoryScreen.DragControllerRefreshCallback();
+				}
+			}
+
 		}
 	}
 }
