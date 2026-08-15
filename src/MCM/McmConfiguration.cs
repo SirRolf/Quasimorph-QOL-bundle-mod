@@ -11,9 +11,7 @@ namespace QOL_bundle.MCM
 
 		public override void Configure()
 		{
-			ModConfig defaults = new ModConfig();
-
-			ModConfigMenuAPI.RegisterModConfig("Extra Deploy Checks", new List<IConfigValue>()
+			ModConfigMenuAPI.RegisterModConfig("QOL Bundle", new List<IConfigValue>()
 			{
 				CreateConfigProperty(nameof(ModConfig.ClickItemsForStock),
 					"Click the items in the upgrade confirmation screen to go to the stock exchange"),

@@ -16,8 +16,7 @@ namespace QOL_bundle.Features.ClickForStock
 		
 		public void OnPointerClick(PointerEventData eventData)
 		{    
-			if (eventData.button != PointerEventData.InputButton.Left)
-				return;
+			if (!Plugin.Config.ClickItemsForStock || eventData.button != PointerEventData.InputButton.Left) return;
 			SingletonMonoBehaviour<SoundController>.Instance.PlayUiSound(SingletonMonoBehaviour<SoundsStorage>.Instance.ButtonClick);
 			UI.Chain<FactionsScreen>().HideAll().Show();
 			MGSC.UI.Chain<TradeWindow>().Invoke(v => v.Configure(_itemId)).Show().AttachToGroup<FactionsScreen>();

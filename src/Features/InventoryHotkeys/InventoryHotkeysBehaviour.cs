@@ -19,26 +19,25 @@ namespace QOL_bundle.Features.InventoryHotkeys
 		
 		private void Update()
 		{
-			if (_itemSlot.IsPointerInside && _itemSlot.Item != null) //probably should change to a keybind but not sure how to do that yet
+			if (!Plugin.Config.Hotkeys) return;
+			if (!_itemSlot.IsPointerInside || _itemSlot.Item == null) return;
+			if (InputHelper.GetKeyDown(Plugin.Config.HotkeyUse))
 			{
-				if (InputHelper.GetKeyDown(KeyCode.E))
-				{
-					_inventoryScreen.InteractWithCharacter(_itemSlot.Item, true);
-				}
+				_inventoryScreen.InteractWithCharacter(_itemSlot.Item, true);
+			}
 
-				if (_itemSlot.Storage.Source != ItemStorageSource.Floor && InputHelper.GetKeyDown(KeyCode.F))
-				{
-					_inventoryScreen.DragControllerDropOutsideCallback(_itemSlot.Item);
-					_inventoryScreen.DragControllerInteractionCallback(InventoryInteractionType.DropOutside);
-					_inventoryScreen.DragControllerRefreshCallback();
-				}
+			if (_itemSlot.Storage.Source != ItemStorageSource.Floor && InputHelper.GetKeyDown(Plugin.Config.HotkeyDrop))
+			{
+				_inventoryScreen.DragControllerDropOutsideCallback(_itemSlot.Item);
+				_inventoryScreen.DragControllerInteractionCallback(InventoryInteractionType.DropOutside);
+				_inventoryScreen.DragControllerRefreshCallback();
+			}
 
-				if (InputHelper.GetKeyDown(KeyCode.D))
-				{
-					_inventoryScreen.DisassembleItem(_itemSlot.Item, (short) -1, true);
-					_inventoryScreen.TryUnloadWeapon(_itemSlot.Item);
-					_inventoryScreen._creatures.Player.CreatureData.EffectsController.PropagateAction(PlayerActionHappened.HandAction);
-				}
+			if (InputHelper.GetKeyDown(Plugin.Config.HotkeyDisassemble))
+			{
+				_inventoryScreen.DisassembleItem(_itemSlot.Item, (short) -1, true);
+				_inventoryScreen.TryUnloadWeapon(_itemSlot.Item);
+				_inventoryScreen._creatures.Player.CreatureData.EffectsController.PropagateAction(PlayerActionHappened.HandAction);
 			}
 
 		}

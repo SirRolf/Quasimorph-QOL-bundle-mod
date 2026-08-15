@@ -44,7 +44,7 @@ namespace QOL_bundle.MCM
             }
             catch (Exception ex)
             {
-                Plugin.Logger.LogError("An error occurred when configuring MCM");
+                Plugin.Logger.LogError($"An error occurred when configuring MCM: {ex}");
             }
 
             return false;
