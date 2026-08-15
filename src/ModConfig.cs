@@ -1,62 +1,86 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json;
+using QOL_bundle.MCM;
+using UnityEngine;
 
 namespace QOL_bundle
 {
-    public class ModConfig
+    public class ModConfig : ISave
     {
-        public static ModConfig LoadConfig(string configPath)
+        public bool ClickItemsForStock { get; set; } = true;
+        public bool Hotkeys { get; set; } = true;
+        public KeyCode HotkeyUse { get; set; } = KeyCode.E;
+        public KeyCode HotkeyDrop { get; set; } = KeyCode.F;
+        public KeyCode HotkeyDisassemble { get; set; } = KeyCode.X;
+        
+
+        [JsonIgnore]
+        private static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings()
+        {
+            Formatting = Formatting.Indented,
+        };
+
+
+        [JsonIgnore]
+        private static string ConfigPath { get; } = Plugin.ConfigDirectories.ConfigPath;
+
+        public static ModConfig LoadConfig()
         {
             ModConfig config;
 
-            JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
-            {
-                Formatting = Formatting.Indented,
-            };
 
-            if (File.Exists(configPath))
+            if (File.Exists(ConfigPath))
             {
                 try
                 {
-                    string sourceJson = File.ReadAllText(configPath);
+                    string sourceJson = File.ReadAllText(ConfigPath);
 
-                    config = JsonConvert.DeserializeObject<ModConfig>(sourceJson, serializerSettings);
+                    config = JsonConvert.DeserializeObject<ModConfig>(sourceJson, SerializerSettings);
 
                     //Add any new elements that have been added since the last mod version the user had.
-                    string upgradeConfig = JsonConvert.SerializeObject(config, serializerSettings);
+                    string upgradeConfig = JsonConvert.SerializeObject(config, SerializerSettings);
 
                     if (upgradeConfig != sourceJson)
                     {
                         Plugin.Logger.Log("Updating config with missing elements");
                         //re-write
-                        File.WriteAllText(configPath, upgradeConfig);
+                        File.WriteAllText(ConfigPath, upgradeConfig);
                     }
-
-
-                    return config;
                 }
                 catch (Exception ex)
                 {
                     Plugin.Logger.LogError("Error parsing configuration.  Ignoring config file and using defaults");
-                    Plugin.Logger.LogException(ex);
 
                     //Not overwriting in case the user just made a typo.
                     config = new ModConfig();
-                    return config;
                 }
             }
             else
             {
-                config = new ModConfig();
-                
-                string json = JsonConvert.SerializeObject(config, serializerSettings);
-                File.WriteAllText(configPath, json);
-
-                return config;
+                //Use the defaults.
+                config = Save(new ModConfig());
             }
 
+            return config;
+        }
 
+
+        public ModConfig Save() 
+        {
+            return Save(this);
+        }
+
+        private static ModConfig Save(ModConfig config)
+        {
+            string json = JsonConvert.SerializeObject(config, SerializerSettings);
+            File.WriteAllText(ConfigPath, json);
+            return config;
+        }
+
+        void ISave.Save()
+        {
+            Save(this);
         }
     }
 }

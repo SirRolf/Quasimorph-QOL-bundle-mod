@@ -19,7 +19,7 @@ namespace QOL_bundle
 
             Directory.CreateDirectory(ConfigDirectories.ModPersistenceFolder);
 
-            Config = ModConfig.LoadConfig(ConfigDirectories.ConfigPath);
+            Config = ModConfig.LoadConfig();
 
             new Harmony("SirRolf_" + ConfigDirectories.ModAssemblyName).PatchAll();
         }
