@@ -1,7 +1,5 @@
-﻿using System;
-using MGSC;
+﻿using MGSC;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace QOL_bundle.Features.InventoryHotkeys
 {
@@ -10,36 +8,49 @@ namespace QOL_bundle.Features.InventoryHotkeys
 		private ItemSlot _itemSlot;
 		private InventoryScreen _inventoryScreen;
 
-		public InventoryHotkeysBehaviour Configure(ItemSlot itemSlot, InventoryScreen inventoryScreen)
+		public void Configure(ItemSlot itemSlot, InventoryScreen inventoryScreen)
 		{
 			_itemSlot = itemSlot;
 			_inventoryScreen =  inventoryScreen;
-			return this;
 		}
 		
 		private void Update()
 		{
-			if (!Plugin.Config.Hotkeys) return;
-			if (!_itemSlot.IsPointerInside || _itemSlot.Item == null) return;
-			if (InputHelper.GetKeyDown(Plugin.Config.HotkeyUse))
+			if (!Plugin.Config.Hotkeys || !_itemSlot.IsPointerInside || _itemSlot.Item == null) return;
+			if (InputHelper.GetKeyDown(KeyCode.E))
 			{
-				_inventoryScreen.InteractWithCharacter(_itemSlot.Item, true);
+				UseItem();
 			}
 
-			if (_itemSlot.Storage.Source != ItemStorageSource.Floor && InputHelper.GetKeyDown(Plugin.Config.HotkeyDrop))
+			if (_itemSlot.Storage.Source != ItemStorageSource.Floor && InputHelper.GetKeyDown(KeyCode.F))
 			{
-				_inventoryScreen.DragControllerDropOutsideCallback(_itemSlot.Item);
-				_inventoryScreen.DragControllerInteractionCallback(InventoryInteractionType.DropOutside);
-				_inventoryScreen.DragControllerRefreshCallback();
+				DropItem();
 			}
 
-			if (InputHelper.GetKeyDown(Plugin.Config.HotkeyDisassemble))
+			if (InputHelper.GetKeyDown(KeyCode.X))
 			{
-				_inventoryScreen.DisassembleItem(_itemSlot.Item, (short) -1, true);
-				_inventoryScreen.TryUnloadWeapon(_itemSlot.Item);
-				_inventoryScreen._creatures.Player.CreatureData.EffectsController.PropagateAction(PlayerActionHappened.HandAction);
+				DisassembleItem();
 			}
 
+		}
+
+		private void UseItem()
+		{
+			_inventoryScreen.InteractWithCharacter(_itemSlot.Item, true);
+		}
+
+		private void DropItem()
+		{
+			_inventoryScreen.DragControllerDropOutsideCallback(_itemSlot.Item);
+			_inventoryScreen.DragControllerInteractionCallback(InventoryInteractionType.DropOutside);
+			_inventoryScreen.DragControllerRefreshCallback();
+		}
+
+		private void DisassembleItem()
+		{
+			_inventoryScreen.DisassembleItem(_itemSlot.Item, (short) -1, true);
+			_inventoryScreen.TryUnloadWeapon(_itemSlot.Item);
+			_inventoryScreen._creatures.Player.CreatureData.EffectsController.PropagateAction(PlayerActionHappened.HandAction);
 		}
 	}
 }

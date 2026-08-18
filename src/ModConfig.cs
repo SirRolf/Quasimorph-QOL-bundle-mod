@@ -2,7 +2,6 @@
 using System.IO;
 using Newtonsoft.Json;
 using QOL_bundle.MCM;
-using UnityEngine;
 
 namespace QOL_bundle
 {
@@ -10,9 +9,6 @@ namespace QOL_bundle
     {
         public bool ClickItemsForStock { get; set; } = true;
         public bool Hotkeys { get; set; } = true;
-        public KeyCode HotkeyUse { get; set; } = KeyCode.E;
-        public KeyCode HotkeyDrop { get; set; } = KeyCode.F;
-        public KeyCode HotkeyDisassemble { get; set; } = KeyCode.X;
         
 
         [JsonIgnore]
