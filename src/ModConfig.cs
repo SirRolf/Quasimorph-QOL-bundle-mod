@@ -9,6 +9,7 @@ namespace QOL_bundle
     {
         public bool ClickItemsForStock { get; set; } = true;
         public bool Hotkeys { get; set; } = true;
+        public bool TravelTimeTradeStation { get; set; } = true;
         
 
         [JsonIgnore]

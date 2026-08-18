@@ -48,7 +48,9 @@ namespace QOL_bundle.MCM
                 CreateConfigProperty(nameof(ModConfig.ClickItemsForStock),
                     "Click the items in the upgrade confirmation screen to go to the stock exchange"),
                 CreateConfigProperty(nameof(ModConfig.Hotkeys),
-                    "Turn on hotkeys")
+                    "Turn on hotkeys"),                
+                CreateConfigProperty(nameof(ModConfig.TravelTimeTradeStation),
+                "Show TravelTime towards TradeStations even if there is no mission")
 
             }, OnSave);
         }
