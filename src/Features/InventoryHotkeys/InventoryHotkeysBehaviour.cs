@@ -1,4 +1,5 @@
-﻿using MGSC;
+﻿using System;
+using MGSC;
 using UnityEngine;
 
 namespace QOL_bundle.Features.InventoryHotkeys
@@ -17,21 +18,17 @@ namespace QOL_bundle.Features.InventoryHotkeys
 		private void Update()
 		{
 			if (!Plugin.Config.Hotkeys || !_itemSlot.IsPointerInside || _itemSlot.Item == null) return;
-			if (InputHelper.GetKeyDown(KeyCode.E))
-			{
-				UseItem();
-			}
+			
+			CheckKeyInput(KeyCode.E, UseItem);
+			CheckKeyInput(KeyCode.F, DropItem);
+			CheckKeyInput(KeyCode.X, DisassembleItem);
+		}
 
-			if (_itemSlot.Storage.Source != ItemStorageSource.Floor && InputHelper.GetKeyDown(KeyCode.F))
-			{
-				DropItem();
-			}
-
-			if (InputHelper.GetKeyDown(KeyCode.X))
-			{
-				DisassembleItem();
-			}
-
+		private static void CheckKeyInput(KeyCode keyCode, Action action)
+		{
+			if (!InputHelper.GetKeyDown(keyCode)) return;
+			
+			action.Invoke();
 		}
 
 		private void UseItem()
@@ -41,6 +38,7 @@ namespace QOL_bundle.Features.InventoryHotkeys
 
 		private void DropItem()
 		{
+			if (_itemSlot.Storage.Source == ItemStorageSource.Floor) return;
 			_inventoryScreen.DragControllerDropOutsideCallback(_itemSlot.Item);
 			_inventoryScreen.DragControllerInteractionCallback(InventoryInteractionType.DropOutside);
 			_inventoryScreen.DragControllerRefreshCallback();
