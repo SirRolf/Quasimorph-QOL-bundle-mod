@@ -1,6 +1,9 @@
 # Quasimorph QOL bundle
+Mod of multiple smaller QOL features i have made. Still activally being worked on.
 
 ![thumbnail icon](media/thumbnail.png)
+
+## [Steam link](https://steamcommunity.com/sharedfiles/filedetails/?id=3780975274)
 
 ## Features
 - Click on Magnum upgrade recources to go to the stock exchange
@@ -18,5 +21,6 @@
 
 If you have any suggestions feel free to contact me or to comment on the Steam Workshop page.
 
-## Source Code
-Source code is available on GitHub at https://github.com/SirRolf/QOL_bundle
+## Recources
+- Mod Configuration Manager by Crynano
+- Mod development tools and project template by Redspy
