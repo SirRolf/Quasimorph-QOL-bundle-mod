@@ -46,6 +46,7 @@ namespace QOL_bundle.Features.InventoryHotkeys
 
 		private void DisassembleItem()
 		{
+			if (!ItemInteractionSystem.CanDisassemble(_itemSlot.Item)) return;
 			_inventoryScreen.DisassembleItem(_itemSlot.Item, (short) -1, true);
 			_inventoryScreen.TryUnloadWeapon(_itemSlot.Item);
 			_inventoryScreen._creatures.Player.CreatureData.EffectsController.PropagateAction(PlayerActionHappened.HandAction);
